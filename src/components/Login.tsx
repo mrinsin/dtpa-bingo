@@ -3,11 +3,41 @@ import './Login.css'
 
 function Login() {
   const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Email submitted:', email)
-    // Handle login logic here
+    setLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, name: '' }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to login')
+      }
+
+      const data = await response.json()
+      console.log('Login successful:', data)
+
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(data.user))
+
+      // TODO: Navigate to main app
+      alert(data.isNew ? 'Welcome! Account created.' : 'Welcome back!')
+    } catch (err) {
+      console.error('Login error:', err)
+      setError('Failed to login. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -25,9 +55,11 @@ function Login() {
             className="login-input"
             required
             autoFocus
+            disabled={loading}
           />
-          <button type="submit" className="login-button">
-            Continue
+          {error && <p className="login-error">{error}</p>}
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Loading...' : 'Continue'}
           </button>
         </form>
       </div>

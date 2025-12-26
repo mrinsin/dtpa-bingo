@@ -65,6 +65,18 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
+.login-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-error {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  margin: 0;
+  text-align: center;
+}
+
 .login-button {
   width: 100%;
   padding: 0.875rem 1.5rem;
@@ -86,6 +98,17 @@
 
 .login-button:active {
   transform: translateY(0);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-button:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 @media (prefers-color-scheme: light) {

@@ -1,73 +1,129 @@
-# React + TypeScript + Vite
+# DTPA Bingo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web-based bingo application built with React and PostgreSQL.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (v18 or higher)
+- Docker Desktop
+- npm or yarn
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Install Dependencies
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Start the Database
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Make sure Docker Desktop is installed and running, then start the PostgreSQL database:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+docker compose up -d
 ```
+
+This will start a PostgreSQL container with:
+- **Database name:** dtpa_bingo
+- **Username:** bingo_user
+- **Password:** bingo_password
+- **Port:** 5432
+
+The `users` table will be automatically created with the following schema:
+- `id` (serial primary key)
+- `email` (varchar, unique)
+- `name` (varchar)
+- `created_at` (timestamp)
+
+### 3. Start the Development Servers
+
+You need to run both the backend server and the frontend:
+
+**Option 1: Run both together (recommended)**
+```bash
+npm run dev:all
+```
+
+**Option 2: Run separately in different terminals**
+
+Terminal 1 - Backend server:
+```bash
+npm run server
+```
+
+Terminal 2 - Frontend:
+```bash
+npm run dev
+```
+
+The frontend will be available at `http://localhost:5173` and the backend API at `http://localhost:3001`
+
+## Database Connection
+
+To connect to the database from your app, use this connection string:
+
+```
+postgresql://bingo_user:bingo_password@localhost:5432/dtpa_bingo
+```
+
+## Useful Commands
+
+### Stop the database
+```bash
+docker compose down
+```
+
+### Stop the database and remove data
+```bash
+docker compose down -v
+```
+
+### View database logs
+```bash
+docker compose logs postgres
+```
+
+### Connect to the database with psql
+```bash
+docker compose exec postgres psql -U bingo_user -d dtpa_bingo
+```
+
+## Project Structure
+
+```
+dtpa-bingo/
+├── src/
+│   ├── components/
+│   │   ├── Login.tsx       # Login component
+│   │   └── Login.css       # Login styles
+│   ├── App.tsx             # Main app component
+│   └── main.tsx            # App entry point
+├── server/
+│   ├── index.ts            # Express server
+│   ├── db.ts               # Database connection
+│   └── routes/
+│       └── users.ts        # User API routes
+├── database/
+│   └── init.sql            # Database initialization script
+├── docker-compose.yml      # Docker configuration
+└── .env                    # Environment variables
+```
+
+## Tech Stack
+
+- React 18 with TypeScript
+- Vite for build tooling
+- Node.js with Express
+- PostgreSQL 16
+- Docker for database containerization
+
+## API Endpoints
+
+The backend provides the following API endpoints:
+
+- `GET /api/health` - Health check endpoint
+- `GET /api/users` - Get all users
+- `GET /api/users/:email` - Get user by email
+- `POST /api/users` - Create or login user (body: `{ email, name }`)
+- `PUT /api/users/:email` - Update user name (body: `{ name }`)
