@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import './Welcome.css'
+import './BingoBoard.css'
 
-interface WelcomeProps {
+interface BingoBoardProps {
   user: { id: number; email: string; name: string }
 }
 
-function Welcome({ user }: WelcomeProps) {
+function BingoBoard({ user }: BingoBoardProps) {
   // Create 5x5 grid with placeholder content (center cell is "FREE")
   const createBoard = () => {
     const board = []
@@ -48,4 +48,4 @@ function Welcome({ user }: WelcomeProps) {
   )
 }
 
-export default Welcome
+export default BingoBoard

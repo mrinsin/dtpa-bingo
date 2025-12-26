@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import Login from './components/Login'
-import Welcome from './components/Welcome'
+import Login from './components/login/Login'
 import './App.css'
+import BingoBoard from './components/bingo-board/BingoBoard'
 
 interface User {
   id: number
@@ -30,7 +30,7 @@ function App() {
   }
 
   if (user) {
-    return <Welcome user={user} />
+    return <BingoBoard user={user} />
   }
 
   return <Login onLogin={handleLogin} />
