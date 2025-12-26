@@ -66,7 +66,7 @@ function BingoBoard({ user }: BingoBoardProps) {
                   {cell.id === 12 ? (
                     <img src={dtpaBaseImage} alt="DTPA Base" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
                   ) : (
-                    cell.isMarked ? cell.text : ''
+                    <span className="cell-text">{cell.text}</span>
                   )}
                 </button>
               ))}
