@@ -39,7 +39,7 @@ function BingoBoard({ user }: BingoBoardProps) {
               className={`bingo-cell ${cell.isMarked ? 'marked' : ''} ${cell.id === 12 ? 'free' : ''}`}
               onClick={() => toggleCell(cell.id)}
             >
-              {cell.text}
+              {cell.isMarked ? cell.text : ''}
             </button>
           ))}
         </div>
