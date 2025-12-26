@@ -25,7 +25,8 @@
 
 .bingo-board {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: auto repeat(5, 1fr);
+  grid-template-rows: auto repeat(5, 1fr);
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.05);
   padding: 1.5rem;
@@ -33,6 +34,21 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.bingo-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(102, 126, 234, 0.9);
+}
+
+.bingo-header.empty {
+  background: transparent;
 }
 
 .bingo-cell {
@@ -99,6 +115,10 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
 
+  .bingo-header {
+    color: rgba(102, 126, 234, 1);
+  }
+
   .bingo-cell {
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid rgba(0, 0, 0, 0.1);
@@ -120,6 +140,11 @@
     padding: 1rem;
   }
 
+  .bingo-header {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
   .bingo-cell {
     font-size: 0.75rem;
     padding: 0.5rem;
@@ -135,6 +160,11 @@
   .bingo-board {
     gap: 0.3rem;
     padding: 0.75rem;
+  }
+
+  .bingo-header {
+    font-size: 0.75rem;
+    padding: 0.3rem;
   }
 
   .bingo-cell {

@@ -28,20 +28,44 @@ function BingoBoard({ user }: BingoBoardProps) {
     ))
   }
 
+  const rowLabels = ['A', 'B', 'C', 'D', 'E']
+  const columnLabels = ['1', '2', '3', '4', '5']
+
   return (
     <div className="welcome-container">
       <div className="welcome-content">
         <h1 className="board-title">{user.name}'s DTPA Bingo Board</h1>
 
         <div className="bingo-board">
-          {board.map((cell) => (
-            <button
-              key={cell.id}
-              className={`bingo-cell ${cell.isMarked ? 'marked' : ''} ${cell.id === 12 ? 'free' : ''}`}
-              onClick={() => toggleCell(cell.id)}
-            >
-              {cell.isMarked ? cell.text : ''}
-            </button>
+          {/* Empty corner cell */}
+          <div className="bingo-header empty"></div>
+
+          {/* Column headers */}
+          {columnLabels.map((label) => (
+            <div key={`col-${label}`} className="bingo-header">
+              {label}
+            </div>
+          ))}
+
+          {/* Rows with row headers and cells */}
+          {rowLabels.map((rowLabel, rowIndex) => (
+            <>
+              {/* Row header */}
+              <div key={`row-${rowLabel}`} className="bingo-header">
+                {rowLabel}
+              </div>
+
+              {/* Cells in this row */}
+              {board.slice(rowIndex * 5, (rowIndex + 1) * 5).map((cell) => (
+                <button
+                  key={cell.id}
+                  className={`bingo-cell ${cell.isMarked ? 'marked' : ''} ${cell.id === 12 ? 'free' : ''}`}
+                  onClick={() => toggleCell(cell.id)}
+                >
+                  {cell.isMarked ? cell.text : ''}
+                </button>
+              ))}
+            </>
           ))}
         </div>
       </div>
