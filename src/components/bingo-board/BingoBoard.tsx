@@ -22,11 +22,47 @@ function BingoBoard({ user }: BingoBoardProps) {
   }
 
   const [board, setBoard] = useState(createBoard())
+  const [hasWon, setHasWon] = useState(false)
+
+  const checkWin = (updatedBoard: typeof board) => {
+    // Check rows
+    for (let i = 0; i < 5; i++) {
+      if (updatedBoard.slice(i * 5, i * 5 + 5).every(cell => cell.isMarked)) {
+        return true
+      }
+    }
+
+    // Check columns
+    for (let i = 0; i < 5; i++) {
+      if ([0, 1, 2, 3, 4].every(row => updatedBoard[row * 5 + i].isMarked)) {
+        return true
+      }
+    }
+
+    // Check diagonal (top-left to bottom-right)
+    if ([0, 6, 12, 18, 24].every(id => updatedBoard[id].isMarked)) {
+      return true
+    }
+
+    // Check diagonal (top-right to bottom-left)
+    if ([4, 8, 12, 16, 20].every(id => updatedBoard[id].isMarked)) {
+      return true
+    }
+
+    return false
+  }
 
   const toggleCell = (id: number) => {
-    setBoard(board.map(cell =>
+    const updatedBoard = board.map(cell =>
       cell.id === id ? { ...cell, isMarked: !cell.isMarked } : cell
-    ))
+    )
+    setBoard(updatedBoard)
+
+    if (checkWin(updatedBoard)) {
+      setHasWon(true)
+    } else {
+      setHasWon(false)
+    }
   }
 
   const rowLabels = ['A', 'B', 'C', 'D', 'E']
@@ -36,6 +72,15 @@ function BingoBoard({ user }: BingoBoardProps) {
     <div className="welcome-container">
       <div className="welcome-content">
         <h1 className="board-title">{user.name}'s DTPA Bingo Board</h1>
+
+        {hasWon && (
+          <div className="win-overlay">
+            <div className="win-message">
+              <div className="win-text">BINGO!</div>
+              <div className="win-subtext">You won!</div>
+            </div>
+          </div>
+        )}
 
         <div className="bingo-board">
           {/* Empty corner cell */}
