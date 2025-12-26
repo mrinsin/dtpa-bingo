@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './BingoBoard.css'
 import bingoData from '../../data/bingoItems.json'
+import dtpaBaseImage from '../../assets/dtpa-base.JPG'
 
 interface BingoBoardProps {
   user: { id: number; email: string; name: string }
@@ -62,7 +63,11 @@ function BingoBoard({ user }: BingoBoardProps) {
                   className={`bingo-cell ${cell.isMarked ? 'marked' : ''} ${cell.id === 12 ? 'free' : ''}`}
                   onClick={() => toggleCell(cell.id)}
                 >
-                  {cell.isMarked ? cell.text : ''}
+                  {cell.id === 12 ? (
+                    <img src={dtpaBaseImage} alt="DTPA Base" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                  ) : (
+                    cell.isMarked ? cell.text : ''
+                  )}
                 </button>
               ))}
             </>

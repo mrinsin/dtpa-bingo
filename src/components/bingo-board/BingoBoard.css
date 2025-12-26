@@ -101,11 +101,19 @@
   color: white;
   font-weight: 600;
   cursor: default;
+  padding: 0;
+  overflow: hidden;
 }
 
 .bingo-cell.free:hover {
   transform: none;
   box-shadow: none;
+}
+
+.bingo-cell.free img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @media (prefers-color-scheme: light) {
