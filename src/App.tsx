@@ -1,8 +1,39 @@
+import { useState, useEffect } from 'react'
 import Login from './components/Login'
+import Welcome from './components/Welcome'
 import './App.css'
 
+interface User {
+  id: number
+  email: string
+  name: string
+}
+
 function App() {
-  return <Login />
+  const [user, setUser] = useState<User | null>(null)
+
+  // Check if user is already logged in on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser))
+      } catch (err) {
+        console.error('Failed to parse stored user:', err)
+        localStorage.removeItem('user')
+      }
+    }
+  }, [])
+
+  const handleLogin = (loggedInUser: User) => {
+    setUser(loggedInUser)
+  }
+
+  if (user) {
+    return <Welcome user={user} />
+  }
+
+  return <Login onLogin={handleLogin} />
 }
 
 export default App

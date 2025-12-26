@@ -31,10 +31,10 @@ router.get('/:email', async (req: Request, res: Response) => {
   }
 })
 
-// Create or update user (login/register)
-router.post('/', async (req: Request, res: Response) => {
+// Login user (only allow existing users)
+router.post('/login', async (req: Request, res: Response) => {
   try {
-    const { email, name } = req.body
+    const { email } = req.body
 
     if (!email) {
       return res.status(400).json({ error: 'Email is required' })
@@ -43,9 +43,33 @@ router.post('/', async (req: Request, res: Response) => {
     // Check if user exists
     const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email])
 
+    if (existingUser.rows.length === 0) {
+      // User does not exist, return error
+      return res.status(401).json({ error: 'Invalid credentials' })
+    }
+
+    // User exists, return user data
+    res.json({ user: existingUser.rows[0] })
+  } catch (err) {
+    console.error('Error logging in user:', err)
+    res.status(500).json({ error: 'Failed to login' })
+  }
+})
+
+// Create new user (for admin/registration purposes)
+router.post('/', async (req: Request, res: Response) => {
+  try {
+    const { email, name } = req.body
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' })
+    }
+
+    // Check if user already exists
+    const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+
     if (existingUser.rows.length > 0) {
-      // User exists, return existing user
-      return res.json({ user: existingUser.rows[0], isNew: false })
+      return res.status(409).json({ error: 'User already exists' })
     }
 
     // Create new user
@@ -54,7 +78,7 @@ router.post('/', async (req: Request, res: Response) => {
       [email, name || '']
     )
 
-    res.status(201).json({ user: result.rows[0], isNew: true })
+    res.status(201).json({ user: result.rows[0] })
   } catch (err) {
     console.error('Error creating user:', err)
     res.status(500).json({ error: 'Failed to create user' })

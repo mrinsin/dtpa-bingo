@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import './Login.css'
 
-function Login() {
+interface LoginProps {
+  onLogin: (user: { id: number; email: string; name: string }) => void
+}
+
+function Login({ onLogin }: LoginProps) {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -12,26 +16,29 @@ function Login() {
     setError('')
 
     try {
-      const response = await fetch('/api/users', {
+      const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, name: '' }),
+        body: JSON.stringify({ email }),
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error('Failed to login')
+        // Show the error message from the backend
+        setError(data.error || 'Failed to login')
+        return
       }
 
-      const data = await response.json()
       console.log('Login successful:', data)
 
       // Store user data in localStorage
       localStorage.setItem('user', JSON.stringify(data.user))
 
-      // TODO: Navigate to main app
-      alert(data.isNew ? 'Welcome! Account created.' : 'Welcome back!')
+      // Navigate to welcome view
+      onLogin(data.user)
     } catch (err) {
       console.error('Login error:', err)
       setError('Failed to login. Please try again.')

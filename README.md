@@ -118,6 +118,17 @@ dtpa-bingo/
 - PostgreSQL 16
 - Docker for database containerization
 
+## Authentication
+
+The app uses email-based authentication. Only existing users in the database can log in. New users must be created through the API first.
+
+To create a test user, run:
+```bash
+curl -X POST http://localhost:3001/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","name":"Test User"}'
+```
+
 ## API Endpoints
 
 The backend provides the following API endpoints:
@@ -125,5 +136,6 @@ The backend provides the following API endpoints:
 - `GET /api/health` - Health check endpoint
 - `GET /api/users` - Get all users
 - `GET /api/users/:email` - Get user by email
-- `POST /api/users` - Create or login user (body: `{ email, name }`)
+- `POST /api/users/login` - Login user (body: `{ email }`) - Returns 401 if user doesn't exist
+- `POST /api/users` - Create new user (body: `{ email, name }`)
 - `PUT /api/users/:email` - Update user name (body: `{ name }`)
