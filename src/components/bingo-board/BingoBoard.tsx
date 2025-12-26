@@ -1,18 +1,19 @@
 import { useState } from 'react'
 import './BingoBoard.css'
+import bingoData from '../../data/bingoItems.json'
 
 interface BingoBoardProps {
   user: { id: number; email: string; name: string }
 }
 
 function BingoBoard({ user }: BingoBoardProps) {
-  // Create 5x5 grid with placeholder content (center cell is "FREE")
+  // Create 5x5 grid with content from JSON file (center cell is "FREE")
   const createBoard = () => {
     const board = []
     for (let i = 0; i < 25; i++) {
       board.push({
         id: i,
-        text: i === 12 ? 'FREE' : `Item ${i + 1}`,
+        text: bingoData.items[i] || `Item ${i + 1}`,
         isMarked: i === 12, // Free space is pre-marked
       })
     }
