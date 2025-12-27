@@ -7,8 +7,7 @@
     "dev": "vite",
     "server": "tsx watch server/index.ts",
     "dev:all": "npm run server & npm run dev",
-    "db:init": "node -e \"require('child_process').execSync('psql $DATABASE_URL -f database/init.sql && psql $DATABASE_URL -f database/seed.sql', {stdio: 'inherit'})\"",
-    "build": "tsc -b && vite build && npm run db:init",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
