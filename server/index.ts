@@ -2,13 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import usersRouter from './routes/users'
 
 dotenv.config()
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -27,7 +23,8 @@ app.get('/api/health', (_req, res) => {
 
 // Serve static files from the dist directory in production
 if (process.env.NODE_ENV === 'production') {
-  const distPath = path.join(__dirname, '..', 'dist')
+  // Use process.cwd() to get the project root directory
+  const distPath = path.join(process.cwd(), 'dist')
   app.use(express.static(distPath))
 
   // Handle client-side routing - serve index.html for all non-API routes
