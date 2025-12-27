@@ -78,11 +78,17 @@
   min-height: 0;
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
+  line-height: 1.3;
 }
 
 .cell-text {
   filter: blur(4px);
   transition: filter 0.3s ease;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bingo-cell:hover {
@@ -160,6 +166,10 @@
 }
 
 @media (max-width: 768px) {
+  .welcome-content {
+    max-width: 100%;
+  }
+
   .board-title {
     font-size: 1.8rem;
   }
@@ -175,41 +185,85 @@
   }
 
   .bingo-cell {
-    font-size: 0.75rem;
-    padding: 0.5rem;
+    font-size: 0.7rem;
+    padding: 0.4rem;
+    line-height: 1.2;
   }
 
   /* Remove blur on tablet - show text normally */
   .cell-text {
     filter: blur(0px);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
   }
 }
 
 @media (max-width: 480px) {
+  .welcome-container {
+    padding: 1rem 0.5rem;
+  }
+
   .board-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
   .bingo-board {
-    gap: 0.3rem;
-    padding: 0.75rem;
+    gap: 0.25rem;
+    padding: 0.5rem;
   }
 
   .bingo-header {
-    font-size: 0.75rem;
-    padding: 0.3rem;
+    font-size: 0.65rem;
+    padding: 0.25rem;
   }
 
   .bingo-cell {
-    font-size: 0.65rem;
-    padding: 0.4rem;
-    border-radius: 8px;
+    font-size: 0.55rem;
+    padding: 0.25rem;
+    border-radius: 6px;
+    line-height: 1.1;
   }
 
   /* Remove blur on mobile - show text normally */
   .cell-text {
     filter: blur(0px);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .welcome-container {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .board-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .bingo-board {
+    gap: 0.2rem;
+    padding: 0.4rem;
+  }
+
+  .bingo-header {
+    font-size: 0.6rem;
+    padding: 0.2rem;
+  }
+
+  .bingo-cell {
+    font-size: 0.5rem;
+    padding: 0.2rem;
+    border-radius: 4px;
+    line-height: 1.1;
+    border-width: 1px;
   }
 }
 
