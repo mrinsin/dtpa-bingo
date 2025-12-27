@@ -30,6 +30,18 @@ if (process.env.NODE_ENV === 'production') {
   console.log('Current working directory:', process.cwd())
   console.log('Looking for dist at:', distPath)
 
+  // Try to find where dist actually is
+  const possiblePaths = [
+    path.join(process.cwd(), '..', 'dist'),
+    path.join(process.cwd(), 'dist'),
+    path.join(process.cwd(), '..', '..', 'dist'),
+  ]
+
+  console.log('Checking possible dist locations:')
+  possiblePaths.forEach(p => {
+    console.log(`  ${p}: ${fs.existsSync(p) ? 'EXISTS' : 'not found'}`)
+  })
+
   // Check if dist directory exists
   if (!fs.existsSync(distPath)) {
     console.error('ERROR: dist directory not found at:', distPath)
