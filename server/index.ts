@@ -24,8 +24,8 @@ app.get('/api/health', (_req, res) => {
 
 // Serve static files from the dist directory in production
 if (process.env.NODE_ENV === 'production') {
-  // Use process.cwd() to get the project root directory
-  const distPath = path.join(process.cwd(), 'dist')
+  // On Render, cwd is /opt/render/project/src, but dist is at /opt/render/project/dist
+  const distPath = path.join(process.cwd(), '..', 'dist')
 
   console.log('Current working directory:', process.cwd())
   console.log('Looking for dist at:', distPath)
