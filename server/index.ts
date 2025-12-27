@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import path from 'path'
-import fs from 'fs'
+import { fileURLToPath } from 'url'
 import usersRouter from './routes/users'
 
 dotenv.config()
@@ -24,37 +24,18 @@ app.get('/api/health', (_req, res) => {
 
 // Serve static files from the dist directory in production
 if (process.env.NODE_ENV === 'production') {
-  // On Render, cwd is /opt/render/project/src, but dist is at /opt/render/project/dist
-  const distPath = path.join(process.cwd(), '..', 'dist')
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__filename)
 
-  console.log('Current working directory:', process.cwd())
-  console.log('Looking for dist at:', distPath)
+  // dist folder is in the project root, one level up from server directory
+  const distPath = path.resolve(__dirname, '..', 'dist')
 
-  // Try to find where dist actually is
-  const possiblePaths = [
-    path.join(process.cwd(), '..', 'dist'),
-    path.join(process.cwd(), 'dist'),
-    path.join(process.cwd(), '..', '..', 'dist'),
-  ]
-
-  console.log('Checking possible dist locations:')
-  possiblePaths.forEach(p => {
-    console.log(`  ${p}: ${fs.existsSync(p) ? 'EXISTS' : 'not found'}`)
-  })
-
-  // Check if dist directory exists
-  if (!fs.existsSync(distPath)) {
-    console.error('ERROR: dist directory not found at:', distPath)
-    console.error('Please ensure "npm run build" has been executed')
-  } else {
-    console.log('dist directory found!')
-  }
+  console.log('Serving static files from:', distPath)
 
   app.use(express.static(distPath))
 
   // Handle client-side routing - serve index.html for all non-API routes
   app.use((req, res, next) => {
-    // Only serve index.html for non-API routes
     if (!req.path.startsWith('/api')) {
       res.sendFile(path.join(distPath, 'index.html'))
     } else {
@@ -64,5 +45,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`)
+  console.log(`Server running on port ${port}`)
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`)
 })
