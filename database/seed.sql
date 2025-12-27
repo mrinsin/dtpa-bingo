@@ -7,6 +7,6 @@ INSERT INTO users (email, name) VALUES
 ('mrinalinisinha05@gmail.com', 'Mrinalini'),
 ('poviedogis12@gmail.com', 'Patricia'),
 ('yasmina.shaush21@gmail.com', 'Yasmina'),
-('anya37212@gmail.com', 'Anya')
+('anya37212@gmail.com', 'Anya'),
 ('cruzjone@gmail.com', 'Jonathan')
 ON CONFLICT (email) DO NOTHING;
