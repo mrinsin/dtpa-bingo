@@ -240,6 +240,32 @@
   font-weight: 600;
   color: white;
   animation: fadeInUp 0.8s ease-out 0.3s both;
+  margin-bottom: 2rem;
+}
+
+.reset-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: fadeInUp 1s ease-out 0.5s both;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.reset-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  background: linear-gradient(135deg, #7b8ff0 0%, #8b5cb8 100%);
+}
+
+.reset-button:active {
+  transform: translateY(-1px);
 }
 
 @keyframes fadeIn {
@@ -290,6 +316,11 @@
   .win-subtext {
     font-size: 1.5rem;
   }
+
+  .reset-button {
+    font-size: 1.1rem;
+    padding: 0.9rem 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -299,5 +330,10 @@
 
   .win-subtext {
     font-size: 1.2rem;
+  }
+
+  .reset-button {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
   }
 }
