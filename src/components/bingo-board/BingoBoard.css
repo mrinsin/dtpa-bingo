@@ -178,6 +178,11 @@
     font-size: 0.75rem;
     padding: 0.5rem;
   }
+
+  /* Remove blur on tablet - show text normally */
+  .cell-text {
+    filter: blur(0px);
+  }
 }
 
 @media (max-width: 480px) {
@@ -200,6 +205,11 @@
     font-size: 0.65rem;
     padding: 0.4rem;
     border-radius: 8px;
+  }
+
+  /* Remove blur on mobile - show text normally */
+  .cell-text {
+    filter: blur(0px);
   }
 }
 
