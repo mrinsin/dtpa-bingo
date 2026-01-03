@@ -3,11 +3,7 @@ import './BingoBoard.css'
 import bingoData from '../../data/bingoItems.json'
 import dtpaBaseImage from '../../assets/dtpa-base.JPG'
 
-interface BingoBoardProps {
-  user: { id: number; email: string; name: string }
-}
-
-function BingoBoard({ }: BingoBoardProps) {
+function BingoBoard() {
   // Create 5x5 grid with content from JSON file (center cell is "FREE")
   const createBoard = () => {
     const board = []
