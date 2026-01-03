@@ -10,7 +10,7 @@ function BingoBoard() {
     for (let i = 0; i < 25; i++) {
       board.push({
         id: i,
-        text: bingoData.items[i] || `Item ${i + 1}`,
+        text: bingoData.items[i],
         isMarked: i === 12, // Free space is pre-marked
       })
     }
