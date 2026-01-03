@@ -76,7 +76,8 @@ function BingoBoard({ user }: BingoBoardProps) {
   return (
     <div className="welcome-container">
       <div className="welcome-content">
-        <h1 className="board-title">{user.name}'s DTPA Bingo Board</h1>
+        <h1 className="board-title">DTPA Bingo</h1>
+        <h3>Mark the tile if you have..</h3>
 
         {hasWon && (
           <div className="win-overlay">
