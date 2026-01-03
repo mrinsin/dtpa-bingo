@@ -141,24 +141,13 @@ function BingoBoard({ user }: BingoBoardProps) {
             <div className="info-section">
               <h3 className="info-subtitle">Instructions</h3>
               <ol className="info-list">
-                <li>Click on any square to mark it</li>
+                <li>Wait for a cell to be called out</li>
+                <li>Hover over the cell to reveal the text</li>
+                <li>Click on the square to mark it</li>
+                <li>Click on the square again if you need to unmark it</li>
                 <li>The center square is FREE and already marked</li>
-                <li>Get 5 in a row to win BINGO!</li>
-                <li>Click "Play Again" to reset the board</li>
+                <li>Get 5 in a row to win DTPA BINGO!</li>
               </ol>
-            </div>
-
-            <div className="info-section">
-              <h3 className="info-subtitle">Winning Patterns</h3>
-              <ul className="info-list">
-                <li>5 horizontal squares (A1-A5, B1-B5, etc.)</li>
-                <li>5 vertical squares (A1-E1, A2-E2, etc.)</li>
-                <li>5 diagonal squares (A1-E5 or A5-E1)</li>
-              </ul>
-            </div>
-
-            <div className="info-tip">
-              <strong>Tip:</strong> Hover over cells on desktop to reveal the text!
             </div>
           </div>
         </div>

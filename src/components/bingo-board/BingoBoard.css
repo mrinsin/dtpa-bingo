@@ -205,21 +205,6 @@
   margin-bottom: 0.5rem;
 }
 
-.info-tip {
-  padding: 1rem;
-  background: rgba(102, 126, 234, 0.1);
-  border-left: 3px solid #667eea;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: inherit;
-  opacity: 0.95;
-}
-
-.info-tip strong {
-  color: #667eea;
-}
-
 @media (prefers-color-scheme: light) {
   .bingo-board {
     background: rgba(255, 255, 255, 0.8);
