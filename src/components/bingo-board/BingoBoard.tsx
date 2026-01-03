@@ -81,7 +81,7 @@ function BingoBoard() {
               <div className="win-text">BINGO!</div>
               <div className="win-subtext">You won!</div>
               <button className="reset-button" onClick={resetBoard}>
-                Play Again
+                Reset Board
               </button>
             </div>
           </div>
