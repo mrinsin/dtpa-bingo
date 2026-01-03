@@ -7,7 +7,7 @@ interface BingoBoardProps {
   user: { id: number; email: string; name: string }
 }
 
-function BingoBoard({ user }: BingoBoardProps) {
+function BingoBoard({ }: BingoBoardProps) {
   // Create 5x5 grid with content from JSON file (center cell is "FREE")
   const createBoard = () => {
     const board = []
@@ -77,7 +77,7 @@ function BingoBoard({ user }: BingoBoardProps) {
     <div className="welcome-container">
       <div className="welcome-content">
         <h1 className="board-title">DTPA Bingo</h1>
-        <h3>Mark the tile if you have..</h3>
+        <h3>Mark the tile if you..</h3>
 
         {hasWon && (
           <div className="win-overlay">
