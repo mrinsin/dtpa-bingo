@@ -90,41 +90,77 @@ function BingoBoard({ user }: BingoBoardProps) {
           </div>
         )}
 
-        <div className="bingo-board">
-          {/* Empty corner cell */}
-          <div className="bingo-header empty"></div>
+        <div className="board-and-info">
+          <div className="bingo-board">
+            {/* Empty corner cell */}
+            <div className="bingo-header empty"></div>
 
-          {/* Column headers */}
-          {columnLabels.map((label) => (
-            <div key={`col-${label}`} className="bingo-header">
-              {label}
-            </div>
-          ))}
-
-          {/* Rows with row headers and cells */}
-          {rowLabels.map((rowLabel, rowIndex) => (
-            <>
-              {/* Row header */}
-              <div key={`row-${rowLabel}`} className="bingo-header">
-                {rowLabel}
+            {/* Column headers */}
+            {columnLabels.map((label) => (
+              <div key={`col-${label}`} className="bingo-header">
+                {label}
               </div>
+            ))}
 
-              {/* Cells in this row */}
-              {board.slice(rowIndex * 5, (rowIndex + 1) * 5).map((cell) => (
-                <button
-                  key={cell.id}
-                  className={`bingo-cell ${cell.isMarked ? 'marked' : ''} ${cell.id === 12 ? 'free' : ''}`}
-                  onClick={() => toggleCell(cell.id)}
-                >
-                  {cell.id === 12 ? (
-                    <img src={dtpaBaseImage} alt="DTPA Base" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
-                  ) : (
-                    <span className="cell-text">{cell.text}</span>
-                  )}
-                </button>
-              ))}
-            </>
-          ))}
+            {/* Rows with row headers and cells */}
+            {rowLabels.map((rowLabel, rowIndex) => (
+              <>
+                {/* Row header */}
+                <div key={`row-${rowLabel}`} className="bingo-header">
+                  {rowLabel}
+                </div>
+
+                {/* Cells in this row */}
+                {board.slice(rowIndex * 5, (rowIndex + 1) * 5).map((cell) => (
+                  <button
+                    key={cell.id}
+                    className={`bingo-cell ${cell.isMarked ? 'marked' : ''} ${cell.id === 12 ? 'free' : ''}`}
+                    onClick={() => toggleCell(cell.id)}
+                  >
+                    {cell.id === 12 ? (
+                      <img src={dtpaBaseImage} alt="DTPA Base" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                    ) : (
+                      <span className="cell-text">{cell.text}</span>
+                    )}
+                  </button>
+                ))}
+              </>
+            ))}
+          </div>
+
+          <div className="info-box">
+            <h2 className="info-title">How to Play</h2>
+
+            <div className="info-section">
+              <h3 className="info-subtitle">Objective</h3>
+              <p className="info-text">
+                Be the first to mark 5 squares in a row - horizontally, vertically, or diagonally!
+              </p>
+            </div>
+
+            <div className="info-section">
+              <h3 className="info-subtitle">Instructions</h3>
+              <ol className="info-list">
+                <li>Click on any square to mark it</li>
+                <li>The center square is FREE and already marked</li>
+                <li>Get 5 in a row to win BINGO!</li>
+                <li>Click "Play Again" to reset the board</li>
+              </ol>
+            </div>
+
+            <div className="info-section">
+              <h3 className="info-subtitle">Winning Patterns</h3>
+              <ul className="info-list">
+                <li>5 horizontal squares (A1-A5, B1-B5, etc.)</li>
+                <li>5 vertical squares (A1-E1, A2-E2, etc.)</li>
+                <li>5 diagonal squares (A1-E5 or A5-E1)</li>
+              </ul>
+            </div>
+
+            <div className="info-tip">
+              <strong>Tip:</strong> Hover over cells on desktop to reveal the text!
+            </div>
+          </div>
         </div>
       </div>
     </div>
