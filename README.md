@@ -36,6 +36,20 @@ The `users` table will be automatically created with the following schema:
 - `name` (varchar)
 - `created_at` (timestamp)
 
+#### Initialize and Seed the Database
+
+To set up the database schema and add seed data, run:
+
+```bash
+# Initialize the database schema
+cat database/init.sql | docker compose exec -T postgres psql -U bingo_user -d dtpa_bingo
+
+# Seed the database with test users
+cat database/seed.sql | docker compose exec -T postgres psql -U bingo_user -d dtpa_bingo
+```
+
+These commands will create the users table and insert test users that you can use to log in.
+
 ### 3. Start the Development Servers
 
 You need to run both the backend server and the frontend:
